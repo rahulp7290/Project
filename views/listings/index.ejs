@@ -1,91 +1,226 @@
 <% layout("/layouts/boilerplate") %>
 <%= success %>
 
-<!-- <body style="background-color: #f4f6f8; padding: 2rem;"> -->
-  <!-- <h2 class="mb-4 text-center">All Listings</h2> -->
-  <style>
-    #filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start; /* Aligns items in a row */
-    }
-  
-    .filter {
-      text-align: center;
-      margin-right: 1rem;
-      margin-top: 2rem;
-      opacity: 0.7;
-    }
-  
-    .filter:hover {
-      opacity: 1;
-      cursor: pointer;
-    }
-  </style>
-  
-  <div id="filters">
-    <div class="filter">
-      <div> <i class="fa-solid fa-fire"></i> </div>
-      <p>Trending</p>
-    </div>
-  
-    <div class="filter">
-      <div> <i class="fa-solid fa-bed"></i> </div>
-      <p>Rooms</p>
-    </div>
-  
-    <div class="filter">
-      <div> <i class="fa-solid fa-people-arrows"></i> </div>
-      <p>Sharing Rooms</p>
-    </div>
+<!-- Custom Styles -->
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .filter {
+    text-align: center;
+    margin-right: 1rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  /* Swiper Testimonial Styles */
+  .swiper {
+    padding: 50px 0;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .testimonial-card p {
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .reviewer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .reviewer img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+
+  .reviewer h6 {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .reviewer small {
+    color: #6c757d;
+  }
+
+  .swiper-pagination-bullet {
+    background-color: #0d6efd;
+  }
+</style>
+
+<!-- Filters -->
+<div id="filters">
+  <div class="filter">
+    <div> <i class="fa-solid fa-fire"></i> </div>
+    <p>Trending</p>
   </div>
-  
 
-  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
-    <% for(let listing of allListings) { %>
-      <div class="col">
-        <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
-          <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative listing-card h-100">
-            <!-- Image with overlay badges -->
-            <div style="position: relative;">
-              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
-                style="height: 200px; object-fit: cover;">
-              
-              <!-- Top Left Badge -->
-              <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 shadow-sm" style="font-size: 0.8rem;">
-                For Rent
-              </span>
+  <div class="filter">
+    <div> <i class="fa-solid fa-bed"></i> </div>
+    <p>Rooms</p>
+  </div>
 
-              <!-- Bottom Left Badge -->
-              <span class="badge bg-light text-success border position-absolute bottom-0 start-0 m-3 px-3 py-2" style="font-size: 0.75rem;">
-                Single Seater
-              </span>
+  <div class="filter">
+    <div> <i class="fa-solid fa-people-arrows"></i> </div>
+    <p>Sharing Rooms</p>
+  </div>
+</div>
+
+<!-- Listings -->
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
+  <% for(let listing of allListings) { %>
+    <div class="col mb-4">
+      <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative h-100">
+          <div style="position: relative;">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
+              style="height: 200px; object-fit: cover;">
+            <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 shadow-sm" style="font-size: 0.8rem;">
+              For Rent
+            </span>
+            <span class="badge bg-light text-success border position-absolute bottom-0 start-0 m-3 px-3 py-2" style="font-size: 0.75rem;">
+              Single Seater
+            </span>
+          </div>
+          <div class="card-body px-4 pb-4 pt-3">
+            <h5 class="card-title fw-semibold mb-2">
+              <%= listing.title %>
+            </h5>
+            <p class="text-success fw-bold mb-1" style="font-size: 1rem;">
+              ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>
+              <small class="text-muted">/ month</small>
+            </p>
+            <p class="text-muted mb-2" style="font-size: 0.9rem;">
+              <i class="bi bi-geo-alt-fill me-1"></i> <%= listing.location || 'Unknown Location' %>
+            </p>
+            <div class="d-flex justify-content-between pt-2 text-muted" style="font-size: 0.85rem;">
+              <span><i class="bi bi-aspect-ratio me-1"></i> 100 Sqft</span>
+              <span><i class="bi bi-bed me-1"></i> 1 Bed</span>
+              <span><i class="bi bi-droplet me-1"></i> 1 Bath</span>
             </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  <% } %>
+</div>
 
-            <!-- Card Body -->
-            <div class="card-body px-4 pb-4 pt-3">
-              <h5 class="card-title fw-semibold mb-2">
-                <%= listing.title %>
-              </h5>
+<!-- Testimonials Section -->
+<section class="bg-light mt-5">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-2">Our Users Say!</h2>
+    <p class="text-muted mb-5">Here are the Reviews Given by Our Old Users</p>
 
-              <p class="text-success fw-bold mb-1" style="font-size: 1rem;">
-                ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>
-                <small class="text-muted">/ month</small>
-              </p>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
 
-              <p class="text-muted mb-2" style="font-size: 0.9rem;">
-                <i class="bi bi-geo-alt-fill me-1"></i> <%= listing.location || 'Unknown Location' %>
-              </p>
-
-              <div class="d-flex justify-content-between pt-2 text-muted" style="font-size: 0.85rem;">
-                <span><i class="bi bi-aspect-ratio me-1"></i> 100 Sqft</span>
-                <span><i class="bi bi-bed me-1"></i> 1 Bed</span>
-                <span><i class="bi bi-droplet me-1"></i> 1 Bath</span>
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>
+              Renting this room has been a wonderful experience! The space was clean, cozy, and well-maintained. The landlord was incredibly friendly and responsive to any concerns or questions I had.
+            </p>
+            <div class="reviewer d-flex align-items-center mt-3">
+              <img src="/images/neelesh.jpeg" class="rounded-circle me-3" width="45" height="45" alt="Neelesh Patel">
+              <div>
+                <h6 class="mb-0 fw-bold">
+                  <i class="fa-solid fa-user-tie me-1 text-primary"></i> Neelesh Patel
+                </h6>
+                <small class="text-muted">Student at GGITS</small>
               </div>
             </div>
           </div>
-        </a>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>
+              I couldn't have asked for a better place to rent! The room was exactly as described. The landlord was so accommodating and made the whole renting process smooth and hassle-free.
+            </p>
+            <!-- <div class="reviewer">
+              <img src="/images/pranav.jpg" alt="Pranav Jain">
+              <div>
+                <h6>Pranav Jain</h6>
+                <small>Student at GGITS</small>
+              </div>
+            </div> -->
+            <div class="reviewer d-flex align-items-center mt-3">
+              <img src="/images/pranav.jpeg" class="rounded-circle me-3" width="45" height="45" alt="Pranav Jain">
+              <div>
+                <h6 class="mb-0 fw-bold">
+                  <i class="fa-solid fa-user-tie me-1 text-primary"></i> Pranav Jain
+                </h6>
+                <small class="text-muted">Student at GGITS</small>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+           <!-- Slide 1 -->
+           <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "I recently stayed at this room and had a great experience. The space was clean, cozy, and well-maintained. The host was responsive and provided all the necessary amenities. The location was perfect, close to key places. Highly recommend this room for anyone looking for a comfortable and hassle-free stay!"
+              </p>
+              <div class="reviewer d-flex align-items-center mt-3">
+                <img src="/images/raj.jpeg" class="rounded-circle me-3" width="45" height="45" alt="Neelesh Patel">
+                <div>
+                  <h6 class="mb-0 fw-bold">
+                    <i class="fa-solid fa-user-tie me-1 text-primary"></i> Raj Chourasiya
+                  </h6>
+                  <small class="text-muted">Student at GGITS</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
       </div>
-    <% } %>
+
+      <div class="swiper-pagination mt-4"></div>
+    </div>
   </div>
-</body>
+</section>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    grabCursor: true,
+  });
+</script>

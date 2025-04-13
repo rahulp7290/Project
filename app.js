@@ -61,7 +61,7 @@ const store = MongoStore.create({
     touchAfter: 24 * 3600,
 });
 
-store.on("error", () =>{
+store.on("error", (err) =>{
     console.log("ERROR in MONGO SESSION STORE", err);
 })
 
@@ -122,7 +122,7 @@ app.use((req, res, next) => {
 
 
 app.get('/', (req, res) => {
-    res.redirect('/listings');
+     res.redirect('/listings');
   });
   
 // app.get("/demouser", async (req, res) => {
@@ -170,3 +170,5 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });
+
+
