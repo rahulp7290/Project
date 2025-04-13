@@ -139,20 +139,4 @@ router.get('/users/:id/listings', async (req, res) => {
     }
   });
   
-  
-  
-
-  router.get("/profile", async (req, res) => {
-    try {
-      const user = await User.findById(req.user._id);
-      const listings = await Listing.find({ owner: req.user._id });
-      res.render("users/profile", { user, listings });
-    } catch (err) {
-      console.log(err);
-      req.flash("error", "Something went wrong!");
-      res.redirect("/listings");
-    }
-  });
-
-
 module.exports = router;

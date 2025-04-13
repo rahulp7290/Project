@@ -14,7 +14,9 @@ const userSchema = new Schema ({
             type: Schema.Types.ObjectId,
             ref: "Listing"
         }
-    ]
+    ],
+  
+
 }, {
     timestamps: true  // Adds createdAt and updatedAt automatically
 

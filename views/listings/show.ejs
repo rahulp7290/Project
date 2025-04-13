@@ -154,7 +154,9 @@
       </form>
     </div>
   </div> -->
-  <% if (currentUser) { %>
+
+
+  <% if (listing.owner && currUser && listing.owner._id.toString() === currUser._id.toString()) { %>
     <div class="col-md-4 text-md-end mt-3 mt-md-0">
       <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary me-2">Edit</a>
       <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
@@ -163,6 +165,16 @@
     </div>
   <% } %>
   
+
+  <!-- <% if (currentUser && currentUser._id.equals(listing.owner._id)) { %>
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary me-2">Edit</a>
+      <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  <% } %>
+   -->
 
 
   <hr class="my-4">
@@ -221,6 +233,13 @@
           <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="m-2">
             <button class="btn btn-sm btn-outline-danger">Delete</button>
           </form>
+
+          <!-- <% if (currUser && review.author && review.author._id.toString() === currUser._id.toString()) { %>
+            <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="m-2">
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
+          <% } %> -->
+          
         </div>
       </div>
       <% } %>
