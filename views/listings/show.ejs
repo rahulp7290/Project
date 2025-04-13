@@ -147,13 +147,23 @@
       
     </div>
 
+    <!-- <div class="col-md-4 text-md-end mt-3 mt-md-0">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary me-2">Edit</a>
+      <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div> -->
+  <% if (currentUser) { %>
     <div class="col-md-4 text-md-end mt-3 mt-md-0">
       <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary me-2">Edit</a>
       <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="d-inline">
         <button class="btn btn-danger">Delete</button>
       </form>
     </div>
-  </div>
+  <% } %>
+  
+
 
   <hr class="my-4">
 

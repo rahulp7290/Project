@@ -108,6 +108,13 @@ app.get('/test-flash', (req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
+
+  //localuser
+  app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+  });
+
  app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()))
@@ -124,6 +131,9 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
      res.redirect('/listings');
   });
+
+
+  
   
 // app.get("/demouser", async (req, res) => {
 //     let fakeUser = new User ({
