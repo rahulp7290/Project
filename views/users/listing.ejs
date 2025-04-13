@@ -1,0 +1,16 @@
+<h3><%= user.username %>'s Listings</h3>
+<% if (user.listings.length > 0) { %>
+  <ul>
+    <% user.listings.forEach(listing => { %>
+      <li>
+        <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+        <a href="/listings/<%= listing._id %>/edit">Edit</a>
+        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <p>No listings yet!</p>
+<% } %>

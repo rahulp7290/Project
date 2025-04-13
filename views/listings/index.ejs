@@ -1,0 +1,91 @@
+<% layout("/layouts/boilerplate") %>
+<%= success %>
+
+<!-- <body style="background-color: #f4f6f8; padding: 2rem;"> -->
+  <!-- <h2 class="mb-4 text-center">All Listings</h2> -->
+  <style>
+    #filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start; /* Aligns items in a row */
+    }
+  
+    .filter {
+      text-align: center;
+      margin-right: 1rem;
+      margin-top: 2rem;
+      opacity: 0.7;
+    }
+  
+    .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  </style>
+  
+  <div id="filters">
+    <div class="filter">
+      <div> <i class="fa-solid fa-fire"></i> </div>
+      <p>Trending</p>
+    </div>
+  
+    <div class="filter">
+      <div> <i class="fa-solid fa-bed"></i> </div>
+      <p>Rooms</p>
+    </div>
+  
+    <div class="filter">
+      <div> <i class="fa-solid fa-people-arrows"></i> </div>
+      <p>Sharing Rooms</p>
+    </div>
+  </div>
+  
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
+    <% for(let listing of allListings) { %>
+      <div class="col">
+        <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+          <div class="card border-0 shadow-sm rounded-4 overflow-hidden position-relative listing-card h-100">
+            <!-- Image with overlay badges -->
+            <div style="position: relative;">
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
+                style="height: 200px; object-fit: cover;">
+              
+              <!-- Top Left Badge -->
+              <span class="badge bg-success position-absolute top-0 start-0 m-3 px-3 py-2 shadow-sm" style="font-size: 0.8rem;">
+                For Rent
+              </span>
+
+              <!-- Bottom Left Badge -->
+              <span class="badge bg-light text-success border position-absolute bottom-0 start-0 m-3 px-3 py-2" style="font-size: 0.75rem;">
+                Single Seater
+              </span>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body px-4 pb-4 pt-3">
+              <h5 class="card-title fw-semibold mb-2">
+                <%= listing.title %>
+              </h5>
+
+              <p class="text-success fw-bold mb-1" style="font-size: 1rem;">
+                ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>
+                <small class="text-muted">/ month</small>
+              </p>
+
+              <p class="text-muted mb-2" style="font-size: 0.9rem;">
+                <i class="bi bi-geo-alt-fill me-1"></i> <%= listing.location || 'Unknown Location' %>
+              </p>
+
+              <div class="d-flex justify-content-between pt-2 text-muted" style="font-size: 0.85rem;">
+                <span><i class="bi bi-aspect-ratio me-1"></i> 100 Sqft</span>
+                <span><i class="bi bi-bed me-1"></i> 1 Bed</span>
+                <span><i class="bi bi-droplet me-1"></i> 1 Bath</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    <% } %>
+  </div>
+</body>

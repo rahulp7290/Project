@@ -1,0 +1,90 @@
+<style>
+  .search-btn {
+    background-color: #c005ef;
+    color: white;
+    border-radius: 25px;
+    padding: 0 1rem;
+  }
+
+  .search-btn:hover {
+    background-color: #a005c9;
+    color: white;
+  }
+
+  .search-btn i {
+    margin-right: 0.5rem;
+  }
+
+  .search-inp {
+    border-radius: 25px;
+    padding: 0.5rem 3rem;
+    font-size: 1rem;
+  }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top px-3">
+  <div class="container-fluid px-0">
+    <a class="navbar-brand ps-3" href="/listings">
+      <i class="fa-solid fa-house-chimney"></i>
+    </a>
+
+    <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+
+      <!-- Left Links -->
+      <div class="navbar-nav ps-3">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+      <!-- Center Search -->
+      <div class="navbar-nav">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2 search-inp" type="search" placeholder="Search Hostels" aria-label="Search">
+          <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
+        </form>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="navbar-nav pe-3 align-items-center">
+
+        <a class="nav-link" href="/listings/new">Add New Listings</a>
+
+        <!-- Dark Mode -->
+        <button id="darkModeToggle" class="btn btn-outline-secondary btn-sm mx-2" title="Toggle Dark Mode">
+          <i class="bi bi-moon-fill"></i>
+        </button>
+
+        <% if (!currUser) { %>
+          <a class="nav-link btn btn-success mx-1 custom-hover" href="/signup"><b>Signup</b></a>
+          <a class="nav-link btn btn-success mx-1 custom-hover" href="/login"><b>Login</b></a>
+        <% } else { %>
+          <!-- 🔽 Profile Dropdown -->
+          <li class="nav-item dropdown list-unstyled">
+            <a class="nav-link dropdown-toggle btn btn-light border mx-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-user-circle me-1"></i> <%= currUser.username %>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/users/<%= currUser._id %>">View Profile</a></li>
+              <li><a class="dropdown-item" href="/users/<%= currUser._id %>/edit">Edit Profile</a></li>
+              <li><a class="dropdown-item" href="/users/<%= currUser._id %>/listings">My Listings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form action="/logout?_method=POST" method="POST" class="d-inline">
+                  <button class="dropdown-item text-danger">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</nav>

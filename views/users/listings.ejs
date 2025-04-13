@@ -1,0 +1,11 @@
+<h2>My Listings</h2>
+
+<% if (listings.length > 0) { %>
+  <% listings.forEach((listing) => { %>
+    <div>
+      <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
+    </div>
+  <% }) %>
+<% } else { %>
+  <p>No listings found!</p>
+<% } %>
