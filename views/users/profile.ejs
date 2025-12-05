@@ -1,20 +1,8 @@
-<h3><%= user.username %>'s Profile</h3>
-<p>Email: <%= user.email %></p>
+<h1>Profile Succesfully Updated</h1>
 
-<% if (user.createdAt) { %>
-  <p>Joined: <%= user.createdAt.toDateString() %></p>
-<% } else { %>
-  <p>Joined date not available</p>
-<% } %>
+  <script>
+  window.location.href = "/";
+</script>
 
-<h4>My Listings</h4>
 
-<% if (listings.length > 0) { %>
-  <% listings.forEach((listing) => { %>
-    <div>
-      <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
-    </div>
-  <% }); %>
-<% } else { %>
-  <p>No listings yet!</p>
-<% } %>
+

@@ -65,23 +65,42 @@ router.post("/logout", (req, res, next) =>{
 
 
 
-// mY profile area
+// // mY profile area
 
-// GET /users/:id - View Profile
-router.get('/users/:id', async (req, res) => {
-    try {
-      const user = await User.findById(req.params.id).populate('listings');
-      if (!user) {
-        req.flash('error', 'User not found');
-        return res.redirect('/listings');
-      }
-      res.render('users/profile', { user });
-    } catch (err) {
-      console.log(err);
-      req.flash('error', 'Something went wrong!');
-      res.redirect('/listings');
+// // GET /users/:id - View Profile
+// router.get('/users/:id', async (req, res) => {
+//     try {
+//       const user = await User.findById(req.params.id).populate('listings');
+//       if (!user) {
+//         req.flash('error', 'User not found');
+//         return res.redirect('/listings');
+//       }
+//       res.render('users/profile', { user });
+//     } catch (err) {
+//       console.log(err);
+//       req.flash('error', 'Something went wrong!');
+//       res.redirect('/listings');
+//     }
+//   });
+// GET /users/:id/listings - Show user's listings
+router.get('/users/:id/listings', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate('listings');
+    if (!user) {
+      req.flash('error', 'User not found');
+      return res.redirect('/listings');
     }
-  });
+
+    // ✅ Pass both `user` and `listings` to the view
+    res.render('users/listings', { user, listings: user.listings });
+  } catch (err) {
+    console.log(err);
+    req.flash('error', 'Something went wrong!');
+    res.redirect('/listings');
+  }
+});
+
+
 
 // GET /users/:id/edit - Edit Profile Form
 router.get('/users/:id/edit', async (req, res) => {

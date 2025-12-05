@@ -25,7 +25,4 @@ module.exports = {
     storage,
 };
 
-// console.log("Cloudinary config loaded:");
-// console.log("Name:", process.env.CLOUD_NAME);
-// console.log("Key:", process.env.CLOUD_API_KEY);
-// console.log("Secret:", process.env.CLOUD_API_SECRET ? "✅ Present" : "❌ Missing");
+

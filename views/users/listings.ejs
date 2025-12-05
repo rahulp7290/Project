@@ -1,11 +1,32 @@
-<h2>My Listings</h2>
+  <% layout("/layouts/boilerplate") %>
 
-<% if (listings.length > 0) { %>
-  <% listings.forEach((listing) => { %>
-    <div>
-      <a href="/listings/<%= listing._id %>"><%= listing.title %></a>
-    </div>
-  <% }) %>
-<% } else { %>
-  <p>No listings found!</p>
-<% } %>
+<div style="background-color: rgb(255, 255, 255); padding: 20px;">
+  <h2><%= user.username %>'s Listings</h2>
+  <br>
+  <br>
+
+  <% if (listings && listings.length > 0) { %>
+    <ul>
+      <% listings.forEach(listing => { %>
+        <li>
+          <a href="/listings/<%= listing._id %>">
+           
+            <strong><%= listing.title %></strong>
+           
+          </a><br />
+          <div>
+            <img src="<%= listing.image.url %>" alt="listing image" style="width: 200px; height: 200px; border-radius: 12px ;">
+          </div>
+           <div>
+               <%= listing.description %>
+            </div>
+            <br>
+          <span><%= listing.location %></span>
+        </li>
+        <hr />
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No listings posted yet.</p>
+  <% } %>
+</div>

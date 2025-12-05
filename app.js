@@ -23,8 +23,9 @@ const userRouter = require("./routes/user.js");
 
 //const MONGO_URL = "mongodb://127.0.0.1:27017/accomdation";
 
-const dbUrl = process.env.ATLASDB_URL; 
+// const dbUrl = process.env.ATLASDB_URL; 
 
+const dbUrl = "mongodb://127.0.0.1:27017/accomdation";
 
 
 
@@ -78,6 +79,12 @@ const sessionOptions = {
     },
 };
 
+app.use((req, res, next) => {
+  res.locals.currUser = req.user;  // or req.session.user or wherever your user info is stored
+  next();
+});
+
+
 // Passport serialization and deserialization
 passport.serializeUser(function(user, done) {
     done(null, user._id);  // Only store the user ID in the session
@@ -94,10 +101,7 @@ passport.serializeUser(function(user, done) {
   
 
 
-// Routes
-// app.get("/", (req, res) => {
-//     res.send("Hi, I am Root");
-// });
+
 
 app.get('/test-flash', (req, res) => {
     req.flash('success', 'Flash is working!');
@@ -134,15 +138,6 @@ app.get('/', (req, res) => {
 
 
   
-  
-// app.get("/demouser", async (req, res) => {
-//     let fakeUser = new User ({
-//         email: "student@gmail.com",
-//         username: "delta-student"
-//     });
-//  let registeredUser = await  User.register(fakeUser, "helloworld");
-//  res.send(registeredUser);
-// });
 
 // chtgpt
 // Route to render the user's profile page
